@@ -1,6 +1,10 @@
 require 'thor'
 require 'thor/runner'
 
+if File.exist?(File.join(Dir.pwd, 'Wagonfile'))
+  load File.join(Dir.pwd, 'Wagonfile')
+end
+
 module Locomotive
   module Wagon
     module CLI
