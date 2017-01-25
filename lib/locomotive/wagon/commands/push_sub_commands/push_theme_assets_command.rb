@@ -57,7 +57,11 @@ module Locomotive::Wagon
       content.gsub!(/([("'])\/((images|fonts)\/[^)"']+)([)"''])/) do
         leading_char, local_path, trailing_char = $1, $2, $4
         local_path.gsub!(/\?[^\/]+\Z/, '') # remove query string if present
-        "#{leading_char}#{(@remote_urls || {})[local_path] || local_path}#{trailing_char}"
+
+        path = (@remote_urls || {})[local_path] || local_path
+        path = "//#{path}" unless path.starts_with?('http', '//')
+
+        "#{leading_char}#{path}#{trailing_char}"
       end
     end
 
